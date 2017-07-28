@@ -3,10 +3,16 @@ new Vue({
 	data: {
 		minutes: 24,
 		seconds: 59,
+		running: false
 	},
 	methods: {
 		start: function () {
-			setInterval(this.countDown, 1000);
+			if (!this.running) {
+				this.running = true;
+				setInterval(this.countDown, 1000);
+			} else {
+				return;
+			}
 		},
 		countDown: function () {
 			if (this.minutes == 0 && this.seconds == 0) {
