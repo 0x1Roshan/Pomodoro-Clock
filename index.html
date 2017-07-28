@@ -2,25 +2,27 @@
 <html>
     <head>
         <title>Pomodoro clock</title>
-        <script  src="node_modules/vue/dist/vue.min.js"></script>
+        <script  src="node_modules/vue/dist/vue.js"></script>
         <link rel="stylesheet" href="resources/css/app.css">
     </head>
 <body>
-    <div id="app" class="container">
-        <div  class="item" id="break">
-            - 5 +
+    <div id="app" >
+        <div class="container">
+            <div  class="item" id="break">
+                - 5 +
+            </div>
+            <div class="item" id="session">
+                {{ minutes }} : {{ seconds }}
+            </div>
+            <div class="item" id="length">
+                - 25 +
+            </div>
         </div>
-        <div class="item" id="session">
-            25 : 00
+        <div class="title">
+            <p class="title-item">Pomodoro Clock</p>
+            <br>
+            <div class="pomodoro title-item" v-on:click="start">start !</div>
         </div>
-        <div class="item" id="length">
-            - 25 +
-        </div>
-    </div>
-    <div class="title">
-        <p class="title-item">Pomodoro Clock</p>
-        <br>
-        <div class="pomodoro title-item">start !</div>
     </div>
     <script src="resources/js/app.js"></script>
 </body>
