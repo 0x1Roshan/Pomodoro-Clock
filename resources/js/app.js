@@ -33,7 +33,7 @@ new Vue({
 		makeTwoDigit: function (number) {
 		 	number = ("0" + number).slice(-2);
 
-			return parseInt(number);
+			return parseInt(number);// [FIXME RC]parseInt doesnot working as expected
 		}
 	}
 });
