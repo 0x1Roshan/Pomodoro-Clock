@@ -35,6 +35,18 @@ new Vue({
 		 	number = ("0" + number).slice(-2);
 
 			return parseInt(number);// [FIXME RC]parseInt doesnot working as expected
+		},
+		minusBreakMinutes: function () {
+			if (this.breakMinutes == 0) {
+				return;
+			}
+			this.breakMinutes--;
+		},
+		plusBreakMinutes: function () {
+			if (this.breakMinutes == 10) {
+				return;
+			}
+			this.breakMinutes++;
 		}
 	}
 });
