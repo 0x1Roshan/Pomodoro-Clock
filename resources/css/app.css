@@ -32,5 +32,8 @@
     width:200px;
     background-color: purple;
     color:white;
+}
+
+.button {
     cursor: pointer;
 }

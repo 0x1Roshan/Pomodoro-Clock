@@ -3,7 +3,8 @@ new Vue({
 	data: {
 		minutes: 25,
 		seconds: 00,
-		running: false
+		running: false,
+		breakMinutes: 5
 	},
 	methods: {
 		start: function () {
