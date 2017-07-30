@@ -4,7 +4,8 @@ new Vue({
 		minutes: 25,
 		seconds: 00,
 		running: false,
-		breakMinutes: 5
+		breakMinutes: 5,
+		lengthMinutes: 20
 	},
 	methods: {
 		start: function () {
@@ -47,6 +48,26 @@ new Vue({
 				return;
 			}
 			this.breakMinutes++;
+		},
+		minusLengthMinutes: function () {
+			if (this.lengthMinutes == 0) {
+				return;
+			}
+			this.lengthMinutes--;
+
+			if (!this.running) {
+				this.minutes = this.lengthMinutes;
+			}
+		},
+		plusLengthMinutes: function () {
+			if (this.lengthMinutes == 25) {
+				return;
+			}
+			this.lengthMinutes++;
+
+			if (!this.running) {
+				this.minutes = this.lengthMinutes;
+			}
 		}
 	}
 });

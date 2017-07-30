@@ -15,7 +15,7 @@
                 {{ minutes }} : {{ seconds }}
             </div>
             <div class="item" id="length">
-                <span class="button" ><i class="fa fa-minus-square"></i></span> 25 <span class="button"><i class="fa fa-plus-square"></i></span>
+                <span class="button" @click="minusLengthMinutes"><i class="fa fa-minus-square"></i></span> {{ lengthMinutes }} <span class="button" @click="plusLengthMinutes"><i class="fa fa-plus-square"></i></span>
             </div>
         </div>
         <div class="title">
