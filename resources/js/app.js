@@ -5,20 +5,33 @@ new Vue({
 		seconds: 00,
 		running: false,
 		breakMinutes: 5,
-		lengthMinutes: 20
+		breakSeconds: 0,
+		lengthMinutes: 20,
+		lengthSeconds: 0
 	},
 	methods: {
-		start: function () {
+		startPomodoro: function () {
 			if (!this.running) {
 				this.running = true;
-				setInterval(this.countDown, 1000);
+				setInterval(this.countDown("pomodoro"), 1000);
 			} else {
 				return;
 			}
 		},
-		countDown: function () {
+		startBreak: function () {
+			setInterval(this.countDown("break"), 1000);
+		},
+		countDown: function (type) {
 			if (this.minutes == 00 && this.seconds == 00) {
-				return;
+				if (type=="pomodoro") {
+					this.running = false;
+					this.startBreak;
+				} else if (type=="break"){
+					this.running = true;
+					this.startPomodoro;
+				} else {
+					return;
+				}
 			}
 
 			if (this.seconds == 0) {
@@ -69,5 +82,8 @@ new Vue({
 				this.minutes = this.lengthMinutes;
 			}
 		}
+	},
+	mounted: function () {
+		this.minutes = this.lengthMinutes;
 	}
 });
