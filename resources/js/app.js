@@ -10,7 +10,7 @@ new Vue({
 		lengthSeconds: 0
 	},
 	methods: {
-		startPomodoro: function () {
+		startPomodoro() {
 			if (!this.running) {
 				this.running = true;
 				timer = setInterval(this.countDown, 1000, "pomodoro");
@@ -18,10 +18,10 @@ new Vue({
 				return;
 			}
 		},
-		startBreak: function (prevBreakMinutes) {
-			setInterval(this.countDown, 1000, "break", prevBreakMinutes);
+		startBreak(prevBreakMinutes) {
+			timer = setInterval(this.countDown, 1000, "break", prevBreakMinutes);
 		},
-		countDown: function (type, prevBreakMinutes) {
+		countDown(type, prevBreakMinutes) {
 			if ( type == "pomodoro" ) {
 				if ( this.seconds == 0 ) {
 					if ( this.minutes != 0 ) {
@@ -35,6 +35,8 @@ new Vue({
 						this.seconds = this.lengthSeconds;
 						this.running = false;
 						clearInterval(timer);
+
+						this.startBreak(this.breakMinutes);
 					}
 				} else {
 					var seconds = this.makeTwoDigit( this.seconds );
@@ -43,13 +45,6 @@ new Vue({
 			}
 
 			if ( type=="break" ) {
-				if (this.breakMinutes == 0 && this.breakSeconds == 0 ) {
-					this.breakMinutes = prevBreakMinutes;
-
-					this.running = false;
-					return;
-				}
-
 				if ( this.breakSeconds == 0 ) {
 					var seconds = this.makeTwoDigit( 59 );
 					this.breakSeconds = seconds;
@@ -60,16 +55,24 @@ new Vue({
 					var seconds = this.makeTwoDigit( this.breakSeconds );
 					this.breakSeconds = seconds - 1;
 				}
+
+				if ( this.breakMinutes == 0 && this.breakSeconds == 0 ) {
+					this.breakMinutes = prevBreakMinutes;
+					this.running = false;
+					clearInterval(timer);
+
+					this.startPomodoro();
+				}
 			}
 		},
 
-		makeTwoDigit: function (number) {
+		makeTwoDigit(number) {
 		 	number = ("0" + number).slice( -2 );
 
 			return parseInt( number );// [FIXME RC]parseInt isnot working as expected
 		},
 
-		minusBreakMinutes: function () {
+		minusBreakMinutes() {
 			if (this.breakMinutes == 0) {
 				return;
 			}
@@ -77,7 +80,7 @@ new Vue({
 			this.breakMinutes--;
 		},
 
-		plusBreakMinutes: function () {
+		plusBreakMinutes() {
 			if ( this.breakMinutes == 10 ) {
 				return;
 			}
@@ -85,7 +88,7 @@ new Vue({
 			this.breakMinutes++;
 		},
 
-		minusLengthMinutes: function () {
+		minusLengthMinutes() {
 			if (this.lengthMinutes == 0) {
 				return;
 			}
@@ -97,7 +100,7 @@ new Vue({
 			}
 		},
 
-		plusLengthMinutes: function () {
+		plusLengthMinutes() {
 			if (this.lengthMinutes == 25) {
 				return;
 			}
@@ -110,7 +113,7 @@ new Vue({
 		}
 	},
 
-	mounted: function () {
+	mounted() {
 		this.minutes = this.lengthMinutes;
 	}
 });
