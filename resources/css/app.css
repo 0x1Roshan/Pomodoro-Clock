@@ -41,3 +41,7 @@
 .button:hover {
     color:#bdc3c7;
 }
+
+.progress {
+    width: 30%;
+}

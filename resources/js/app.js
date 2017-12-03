@@ -7,7 +7,15 @@ new Vue({
 		breakMinutes: 5,
 		breakSeconds: 0,
 		lengthMinutes: 20,
-		lengthSeconds: 0
+		lengthSeconds: 0,
+		length: {
+			totalSeconds : 0,
+			currentSeconds : 0,
+			percent : 100
+		},
+		progress: {
+			width : ""
+		}
 	},
 	methods: {
 		startPomodoro() {
@@ -18,7 +26,9 @@ new Vue({
 				return;
 			}
 		},
+			
 		startBreak(prevBreakMinutes) {
+			this.init();
 			timer = setInterval(this.countDown, 1000, "break", prevBreakMinutes);
 		},
 		countDown(type, prevBreakMinutes) {
@@ -42,7 +52,12 @@ new Vue({
 					var seconds = this.makeTwoDigit( this.seconds );
 					this.seconds = seconds - 1;
 				}
-			}
+
+				this.length.currentSeconds--;
+				this.length.percent = ( 100 / this.length.totalSeconds ) * this.length.currentSeconds;
+
+				this.progress.width = "width: " + this.length.percent + "%";  
+ 			}
 
 			if ( type=="break" ) {
 				if ( this.breakSeconds == 0 ) {
@@ -94,6 +109,8 @@ new Vue({
 			}
 
 			this.lengthMinutes--;
+			this.length.totalSeconds = this.lengthMinutes * 60;
+			this.length.currentSeconds = this.length.totalSeconds;
 
 			if (!this.running) {
 				this.minutes = this.lengthMinutes;
@@ -106,14 +123,27 @@ new Vue({
 			}
 
 			this.lengthMinutes++;
-
+			this.length.totalSeconds = this.lengthMinutes * 60;
+			this.length.currentSeconds = this.length.totalSeconds;
+			
 			if (!this.running) {
 				this.minutes = this.lengthMinutes;
 			}
+		},
+		init() {
+			this.minutes = this.lengthMinutes;
+
+			this.length.totalSeconds = this.lengthMinutes * 60;
+
+			this.length.currentSeconds = this.length.totalSeconds;
+
+			this.length.percent = 100;
+
+			this.progress.width = "width: " + this.length.percent + "%";
 		}
 	},
 
 	mounted() {
-		this.minutes = this.lengthMinutes;
+		this.init();	
 	}
 });
