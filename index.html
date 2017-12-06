@@ -22,13 +22,21 @@
             </div>
         </div>
         <div class="container">
-            <div class="progress">
-              <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
-              :style="progress.width">
-              {{ length.seconds }}
-              </div>
+            <div class="progress-bar-container">
+                <i v-if="showBreakProgress" >{{ breakMinutes}} : {{ breakSeconds}}</i>
+                <div v-if="showBreakProgress" class="progress">
+                  <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+                  :style="progress.width">
+                        break
+                  </div>
+                </div>
+                 <div v-else class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
+                    :style="progress.width">
+                        
+                    </div>
+                </div>
             </div>
-            <i>{{ breakMinutes}} : {{ breakSeconds}}</i>
             <div class="title">
                 <p class="title-item">Pomodoro Clock</p>
                 <br>

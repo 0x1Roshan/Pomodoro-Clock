@@ -42,6 +42,10 @@
     color:#bdc3c7;
 }
 
-.progress {
-    width: 30%;
+.progress-bar-container {
+    width: 50%;
+}
+
+.title {
+    width:50%;
 }

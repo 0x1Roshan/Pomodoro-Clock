@@ -8,6 +8,7 @@ new Vue({
 		breakSeconds: 0,
 		lengthMinutes: 20,
 		lengthSeconds: 0,
+		showBreakProgress: false,
 		length: {
 			totalSeconds : 0,
 			currentSeconds : 0,
@@ -21,6 +22,8 @@ new Vue({
 		startPomodoro() {
 			if (!this.running) {
 				this.running = true;
+				this.showBreakProgress = false;
+				this.init('start');
 				timer = setInterval(this.countDown, 1000, "pomodoro");
 			} else {
 				return;
@@ -28,7 +31,8 @@ new Vue({
 		},
 			
 		startBreak(prevBreakMinutes) {
-			this.init();
+			this.init('break');
+			this.showBreakProgress = true;
 			timer = setInterval(this.countDown, 1000, "break", prevBreakMinutes);
 		},
 		countDown(type, prevBreakMinutes) {
@@ -78,6 +82,11 @@ new Vue({
 
 					this.startPomodoro();
 				}
+
+				this.length.currentSeconds--;
+				this.length.percent = ( 100 / this.length.totalSeconds ) * this.length.currentSeconds;
+
+				this.progress.width = "width: " + this.length.percent + "%";
 			}
 		},
 
@@ -130,10 +139,14 @@ new Vue({
 				this.minutes = this.lengthMinutes;
 			}
 		},
-		init() {
+		init(type) {
 			this.minutes = this.lengthMinutes;
 
-			this.length.totalSeconds = this.lengthMinutes * 60;
+			if (type == 'start') {
+				this.length.totalSeconds = this.lengthMinutes * 60;
+			} else {
+				this.length.totalSeconds = this.breakMinutes * 60;
+			}
 
 			this.length.currentSeconds = this.length.totalSeconds;
 
@@ -144,6 +157,6 @@ new Vue({
 	},
 
 	mounted() {
-		this.init();	
+		this.init('start');	
 	}
 });
